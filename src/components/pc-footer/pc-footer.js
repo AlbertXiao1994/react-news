@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 
-export default class A extends Component {
+export default class PCFooter extends Component {
   render() {
     return (
-      
+      <p>All right resolved</p>
     );
   }
 }
