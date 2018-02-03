@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import MediaQuery from "react-responsive"
+import MediaQuery from "react-responsive";
 
 class App extends Component {
   render() {
