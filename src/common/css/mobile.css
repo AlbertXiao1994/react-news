@@ -13,12 +13,16 @@ html {
 }
 
 #mobileheader header img {
-    height: 50px;
+    height: 35px;
 }
 
 #mobileheader header span {
-    font-size: 35px;
+    font-size: 25px;
     vertical-align: top;
     padding-left: 5px;
     color: #2db7f5;
+}
+
+.footer {
+    text-align: center;
 }
