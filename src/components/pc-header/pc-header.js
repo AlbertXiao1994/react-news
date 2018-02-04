@@ -6,8 +6,8 @@ export default class A extends Component {
   state = {
     current: 'top'
   }
-  handerClick = (e) => {
-    this.setstate({
+  handleClick = (e) => {
+    this.setState({
       current: e.key
     });
   }
@@ -20,7 +20,7 @@ export default class A extends Component {
           <Col span={16}>
           <Menu mode="horizontal"
                 selectedKeys={[this.state.current]}
-                onClick={this.handerClick}>
+                onClick={this.handleClick}>
 							<Menu.Item key="top">
 								<Icon type="appstore"/>头条
 							</Menu.Item>

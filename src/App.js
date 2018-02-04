@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import MediaQuery from 'react-responsive';
-import PCIndex from '@/components/pc-index/pc-index'
+import PCIndex from 'components/pc-index/pc-index'
 
 class App extends Component {
   render() {
