@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Row, Col } from 'antd';
 import { Menu, Icon } from 'antd';
+const logoSrc = require('common/images/logo.png');
 
 export default class A extends Component {
   state = {
@@ -16,9 +17,14 @@ export default class A extends Component {
       <header>
         <Row>
           <Col span={2}></Col>
-          <Col span={4}></Col>
+          <Col span={4}>
+						<a href="/" className="logo">
+							<img src={logoSrc} alt="logo"/>
+							<span>ReactNews</span>
+						</a>
+					</Col>
           <Col span={16}>
-          <Menu mode="horizontal"
+          	<Menu mode="horizontal"
                 selectedKeys={[this.state.current]}
                 onClick={this.handleClick}>
 							<Menu.Item key="top">
