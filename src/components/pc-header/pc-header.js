@@ -12,33 +12,34 @@ class PCHeader extends Component {
 		userName: '',
 		userId: 0,
 		modalVisible: false,
-		action: 'login'
+		action: 'login',
+		buttonSize: 'small'
 	}
-	componentWillMount() {
-		if (localStorage.userId !== '') {
-			this.setState({
-				hasLogined: true,
-				userId: localStorage.userId,
-				userName: localStorage.userName
-			});
-		}
-	}
+	// componentWillMount() {
+	// 	if (localStorage.userId !== '') {
+	// 		this.setState({
+	// 			hasLogined: true,
+	// 			userId: localStorage.userId,
+	// 			userName: localStorage.userName
+	// 		});
+	// 	}
+	// }
   handleClick = (e) => {
     this.setState({
 			current: e.key
     });
 	}
-	logout() {
+	logou = () => {
+		localStorage.userId= '';
+		localStorage.userName = '';
+		this.setState({hasLogined:false});
+	}
+	setModalVisible = () => {
 		this.setState({
-			hasLogined: false
+			modalVisible: !this.state.modalVisible
 		});
 	}
-	onModalCancel() {
-		this.setState({
-			modalVisible: false
-		});
-	}
-	onTabsChange(key) {
+	onTabsChange = (key) => {
 		if (key === 1) {
 			this.setState({
 				action: 'login'
@@ -49,24 +50,24 @@ class PCHeader extends Component {
 			});
 		}
 	}
-	submitForm() {
+	submitForm = () => {
 
 	}
   render() {
 		const { getFieldDecorator } = this.props.form;
-		let userShow = this.state.hasLogined
+		const userShow = this.state.hasLogined
 			? <Menu.Item key="logout" className="register">
-				 <Button type="primary" htmlType="button">{this.state.userName}</Button>
+				 <Button type="primary" htmlType="button" size={this.state.buttonSize}>{this.state.userName}</Button>
 				 &nbsp;&nbsp;
 				 {/* <Link target="_blank"> */}
-				 	<Button type="dashed" htmlType="button">个人中心</Button>
+				 	<Button type="dashed" htmlType="button" size={this.state.buttonSize}>个人中心</Button>
 				 {/* </Link> */}
 				 &nbsp;&nbsp;
-				 <Button type="ghost" htmlType="button" onClick={this.logout}>退出</Button>
-			 </Menu.Item>
+				 <Button type="ghost" htmlType="button" onClick={this.logout} size={this.state.buttonSize}>退出</Button>
+			 	</Menu.Item>
 			: <Menu.Item key="register" className="register">
-					<Icon type="appstore" />>登录/注册
-				</Menu.Item>
+					<Icon type="appstore" />登录/注册
+				</Menu.Item>;
     return (
       <header>
         <Row>
@@ -111,8 +112,8 @@ class PCHeader extends Component {
 						title="用户中心" 
 						wrapClassName="vertical-center-modal" 
 						visible={this.state.modalVisible} 
-						onCancel={this.onModalCancel}
-						onOk={this.onModalCancel}
+						onCancel={this.setModalVisible}
+						onOk={this.setModalVisible}
 						okText="关闭">
 							<Tabs type="card" onChange={this.onTabsChange}>
 								<TabPane tab="登录" key="1">
