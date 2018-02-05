@@ -24,12 +24,17 @@ class PCHeader extends Component {
 	// 		});
 	// 	}
 	// }
-  handleClick = (e) => {
-    this.setState({
-			current: e.key
-    });
+  	handleClick = (e) => {
+      if (e.key === "register") {
+        this.setState({
+          modalVisible: true
+        })
+      }
+   	  this.setState({
+		    current: e.key
+      });
 	}
-	logou = () => {
+	logout = () => {
 		localStorage.userId= '';
 		localStorage.userName = '';
 		this.setState({hasLogined:false});
@@ -50,7 +55,10 @@ class PCHeader extends Component {
 			});
 		}
 	}
-	submitForm = () => {
+	loginSubmit = () => {
+
+  }
+  logupSubmit = () => {
 
 	}
   render() {
@@ -114,31 +122,53 @@ class PCHeader extends Component {
 						visible={this.state.modalVisible} 
 						onCancel={this.setModalVisible}
 						onOk={this.setModalVisible}
-						okText="关闭">
+						okText="关闭"
+            cancelText="取消">
 							<Tabs type="card" onChange={this.onTabsChange}>
 								<TabPane tab="登录" key="1">
-									<Form onSubmit={this.submitForm}>
+									<Form onSubmit={this.loginSubmit}>
 										<Form.Item label="用户名">
 											{getFieldDecorator('userName', {
 												rules: [{ required: true, message: '请输入您的用户名'}],
 											})(
-												<Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)'}} />} placeholder="用户名" />
+												<Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)'}} />} placeholder="请输入您的用户名" />
 											)}
 										</Form.Item>
 										<Form.Item label="密码">
-											{getFieldDecorator('userName', {
+											{getFieldDecorator('password', {
 												rules: [{ required: true, message: '请输入您的密码'}],
 											})(
-												<Input prefix={<Icon type="password" style={{ color: 'rgba(0,0,0,.25)'}} />} placeholder="密码" />
+												<Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)'}} />} type="password" placeholder="请输入您的密码" />
 											)}
 										</Form.Item>
-										<Form.Item>
-											<Button type="primary" htmlType="submit">登录</Button>
-										</Form.Item>
+										<Button type="primary" htmlType="submit">登录</Button>
 									</Form>
 								</TabPane>
 								<TabPane tab="注册" key="2">
-									
+                <Form onSubmit={this.logupSubmit}>
+										<Form.Item label="用户名">
+											{getFieldDecorator('userName', {
+												rules: [{ required: true, message: '请输入您的用户名'}],
+											})(
+												<Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)'}} />} placeholder="请输入您的用户名" />
+											)}
+										</Form.Item>
+										<Form.Item label="密码">
+											{getFieldDecorator('password', {
+												rules: [{ required: true, message: '请输入您的密码'}],
+											})(
+												<Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)'}} />} type="password" placeholder="请输入您的密码" />
+											)}
+										</Form.Item>
+                    <Form.Item label="确认密码">
+											{getFieldDecorator('password', {
+												rules: [{ required: true, message: '请确认您的密码'}],
+											})(
+												<Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)'}} />} type="password" placeholder="请确认您的密码" />
+											)}
+										</Form.Item>
+										<Button type="primary" htmlType="submit">注册</Button>
+									</Form>
 								</TabPane>
 							</Tabs>
 						</Modal>
