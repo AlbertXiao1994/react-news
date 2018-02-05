@@ -1,18 +1,72 @@
 import React, { Component } from 'react';
 import { Row, Col } from 'antd';
-import { Menu, Icon } from 'antd';
+import { Menu, Icon, Button, Modal, Form, Tabs, Input } from 'antd';
+// import { Link } from 'react-router-dom';
 const logoSrc = require('common/images/logo.png');
+const TabPane = Tabs.TabPane;
 
-export default class A extends Component {
+class PCHeader extends Component {
   state = {
-    current: 'top'
-  }
+		current: 'top',
+		hasLogined: false,
+		userName: '',
+		userId: 0,
+		modalVisible: false,
+		action: 'login'
+	}
+	componentWillMount() {
+		if (localStorage.userId !== '') {
+			this.setState({
+				hasLogined: true,
+				userId: localStorage.userId,
+				userName: localStorage.userName
+			});
+		}
+	}
   handleClick = (e) => {
     this.setState({
-      current: e.key
+			current: e.key
     });
-  }
+	}
+	logout() {
+		this.setState({
+			hasLogined: false
+		});
+	}
+	onModalCancel() {
+		this.setState({
+			modalVisible: false
+		});
+	}
+	onTabsChange(key) {
+		if (key === 1) {
+			this.setState({
+				action: 'login'
+			});
+		} else if (key === 2) {
+			this.setState({
+				action: 'register'
+			});
+		}
+	}
+	submitForm() {
+
+	}
   render() {
+		const { getFieldDecorator } = this.props.form;
+		let userShow = this.state.hasLogined
+			? <Menu.Item key="logout" className="register">
+				 <Button type="primary" htmlType="button">{this.state.userName}</Button>
+				 &nbsp;&nbsp;
+				 {/* <Link target="_blank"> */}
+				 	<Button type="dashed" htmlType="button">个人中心</Button>
+				 {/* </Link> */}
+				 &nbsp;&nbsp;
+				 <Button type="ghost" htmlType="button" onClick={this.logout}>退出</Button>
+			 </Menu.Item>
+			: <Menu.Item key="register" className="register">
+					<Icon type="appstore" />>登录/注册
+				</Menu.Item>
     return (
       <header>
         <Row>
@@ -51,7 +105,42 @@ export default class A extends Component {
 							<Menu.Item key="shishang">
 								<Icon type="appstore"/>时尚
 							</Menu.Item>
+							{userShow}
 						</Menu>
+						<Modal
+						title="用户中心" 
+						wrapClassName="vertical-center-modal" 
+						visible={this.state.modalVisible} 
+						onCancel={this.onModalCancel}
+						onOk={this.onModalCancel}
+						okText="关闭">
+							<Tabs type="card" onChange={this.onTabsChange}>
+								<TabPane tab="登录" key="1">
+									<Form onSubmit={this.submitForm}>
+										<Form.Item label="用户名">
+											{getFieldDecorator('userName', {
+												rules: [{ required: true, message: '请输入您的用户名'}],
+											})(
+												<Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)'}} />} placeholder="用户名" />
+											)}
+										</Form.Item>
+										<Form.Item label="密码">
+											{getFieldDecorator('userName', {
+												rules: [{ required: true, message: '请输入您的密码'}],
+											})(
+												<Input prefix={<Icon type="password" style={{ color: 'rgba(0,0,0,.25)'}} />} placeholder="密码" />
+											)}
+										</Form.Item>
+										<Form.Item>
+											<Button type="primary" htmlType="submit">登录</Button>
+										</Form.Item>
+									</Form>
+								</TabPane>
+								<TabPane tab="注册" key="2">
+									
+								</TabPane>
+							</Tabs>
+						</Modal>
           </Col>
           <Col span={2}></Col>
         </Row>
@@ -59,3 +148,6 @@ export default class A extends Component {
     );
   }
 }
+
+
+export default PCHeader = Form.create()(PCHeader);
