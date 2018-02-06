@@ -14,7 +14,7 @@ class PCHeader extends Component {
 		modalVisible: false,
 		action: 'login',
 		buttonSize: 'small'
-	}
+	};
 	// componentWillMount() {
 	// 	if (localStorage.userId !== '') {
 	// 		this.setState({
@@ -33,17 +33,17 @@ class PCHeader extends Component {
    	this.setState({
 		  current: e.key
     });
-	}
+	};
 	logout = () => {
 		localStorage.userId= '';
 		localStorage.userName = '';
 		this.setState({hasLogined:false});
-	}
+	};
 	setModalVisible = () => {
 		this.setState({
 			modalVisible: !this.state.modalVisible
 		});
-	}
+	};
 	onTabsChange = (key) => {
 		if (key === 1) {
 			this.setState({
@@ -54,11 +54,33 @@ class PCHeader extends Component {
 				action: 'register'
 			});
 		}
-	}
+	};
 	submitForm = (e) => {
 		e.preventDefault();
-
-  }
+		const fetchOptions = {
+			method: 'GET'
+		};
+		let form = this.props.form.getFieldsValue();
+		fetch('http://newsapi.gugujiankong.com/Handler.ashx?action=' + this.state.action
+		+ '&username=' + FormData.userName + '&password=' + FormData.password
+		+ '&r_userName=' + FormData.r_userName + '&r_password=' + formData.r_password
+		+ '&r_confirmPassword=' + formData.r_confirmPassword, fetchOptions)
+		.then(res => res.json())
+		.then((res) => {
+			this.setState({
+				userName: res.userName,
+				userId: res.userId
+			});
+			localStorage.userName = res.userName;
+			localStorage.userId = res.userId;
+		});
+		if (this.state.action === 'login') {
+			this.setState({
+				hasLogined: true
+			})
+		}
+		this.setModalVisible();
+  };
   render() {
 		const { getFieldDecorator } = this.props.form;
 		const userShow = this.state.hasLogined
@@ -145,21 +167,21 @@ class PCHeader extends Component {
 								<TabPane tab="注册" key="2">
                 <Form onSubmit={this.submitForm}>
 										<Form.Item label="用户名">
-											{getFieldDecorator('userName', {
+											{getFieldDecorator('r_userName', {
 												rules: [{ required: true, message: '请输入您的用户名'}],
 											})(
 												<Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)'}} />} placeholder="请输入您的用户名" />
 											)}
 										</Form.Item>
 										<Form.Item label="密码">
-											{getFieldDecorator('password', {
+											{getFieldDecorator('r_password', {
 												rules: [{ required: true, message: '请输入您的密码'}],
 											})(
 												<Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)'}} />} type="password" placeholder="请输入您的密码" />
 											)}
 										</Form.Item>
                     <Form.Item label="确认密码">
-											{getFieldDecorator('password', {
+											{getFieldDecorator('r_confirmPassword', {
 												rules: [{ required: true, message: '请确认您的密码'}],
 											})(
 												<Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)'}} />} type="password" placeholder="请确认您的密码" />
