@@ -24,15 +24,15 @@ class PCHeader extends Component {
 	// 		});
 	// 	}
 	// }
-  	handleClick = (e) => {
-      if (e.key === "register") {
-        this.setState({
-          modalVisible: true
-        })
-      }
-   	  this.setState({
-		    current: e.key
-      });
+  handleClick = (e) => {
+    if (e.key === "register") {
+      this.setState({
+        modalVisible: true
+      })
+    }
+   	this.setState({
+		  current: e.key
+    });
 	}
 	logout = () => {
 		localStorage.userId= '';
@@ -55,12 +55,11 @@ class PCHeader extends Component {
 			});
 		}
 	}
-	loginSubmit = () => {
-
+	submitForm = (e) => {
+		e.preventDefault();
+		
   }
-  logupSubmit = () => {
-
-	}
+}
   render() {
 		const { getFieldDecorator } = this.props.form;
 		const userShow = this.state.hasLogined
@@ -126,7 +125,7 @@ class PCHeader extends Component {
             cancelText="取消">
 							<Tabs type="card" onChange={this.onTabsChange}>
 								<TabPane tab="登录" key="1">
-									<Form onSubmit={this.loginSubmit}>
+									<Form onSubmit={this.submitForm}>
 										<Form.Item label="用户名">
 											{getFieldDecorator('userName', {
 												rules: [{ required: true, message: '请输入您的用户名'}],
@@ -145,7 +144,7 @@ class PCHeader extends Component {
 									</Form>
 								</TabPane>
 								<TabPane tab="注册" key="2">
-                <Form onSubmit={this.logupSubmit}>
+                <Form onSubmit={this.submitForm}>
 										<Form.Item label="用户名">
 											{getFieldDecorator('userName', {
 												rules: [{ required: true, message: '请输入您的用户名'}],
