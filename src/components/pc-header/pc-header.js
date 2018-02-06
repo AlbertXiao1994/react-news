@@ -57,9 +57,8 @@ class PCHeader extends Component {
 	}
 	submitForm = (e) => {
 		e.preventDefault();
-		
+
   }
-}
   render() {
 		const { getFieldDecorator } = this.props.form;
 		const userShow = this.state.hasLogined
