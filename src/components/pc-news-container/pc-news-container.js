@@ -7,6 +7,7 @@ import crs_3 from 'common/images/carousel_3.jpg';
 import crs_4 from 'common/images/carousel_4.png';
 import PCNewsImageBlock from 'components/pc-news-image-block/pc-news-image-block';
 import PCNewsBlock from 'components/pc-news-block/pc-news-block';
+import PCProduct from 'components/pc-product/pc-product';
 const TabPane = Tabs.TabPane;
 
 export default class PCNewsContainer extends Component {
@@ -41,6 +42,11 @@ export default class PCNewsContainer extends Component {
               </TabPane>
               <TabPane key="2" tab="娱乐">
                 <PCNewsBlock count={22} type="yule" width="100%" />
+              </TabPane>
+            </Tabs>
+            <Tabs className="tabs_product">
+              <TabPane key="1" tab="React News产品">
+                <PCProduct />
               </TabPane>
             </Tabs>
             <div>

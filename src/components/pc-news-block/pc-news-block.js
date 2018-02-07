@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Card } from 'antd';
+import { Link } from 'react-router-dom';
 
 export default class PCNewsBlock extends Component {
   state = {
@@ -23,7 +24,7 @@ export default class PCNewsBlock extends Component {
     const newsList = news.length 
     ? news.map((item, index) => (
       <li key={index}>
-       <a href={`details/${item.uniquekey}`} target="_blank">{ item.title }</a>
+       <Link to={`details/${item.uniquekey}`} target="_blank">{ item.title }</Link>
       </li>
     ))
     : '暂无新闻';
