@@ -23,6 +23,14 @@ html {
     color: #2db7f5;
 }
 
+#mobileheader i{
+    font-size: 0.5rem;
+    float: right;
+    margin-right: 0.3rem;
+    margin-top: 0.1rem;
+    color:#2db7f5;
+}
+
 .footer {
     text-align: center;
 }

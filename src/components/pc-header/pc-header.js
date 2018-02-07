@@ -15,15 +15,15 @@ class PCHeader extends Component {
 		action: 'login',
 		buttonSize: 'small'
 	};
-	// componentWillMount() {
-	// 	if (localStorage.userId !== '') {
-	// 		this.setState({
-	// 			hasLogined: true,
-	// 			userId: localStorage.userId,
-	// 			userName: localStorage.userName
-	// 		});
-	// 	}
-	// }
+	componentWillMount() {
+		if (localStorage.userId !== '') {
+			this.setState({
+				hasLogined: true,
+				userId: localStorage.userId,
+				userName: localStorage.userName
+			});
+		}
+	}
   handleClick = (e) => {
     if (e.key === "register") {
       this.setState({
@@ -45,11 +45,11 @@ class PCHeader extends Component {
 		});
 	};
 	onTabsChange = (key) => {
-		if (key === 1) {
+		if (key === '1') {
 			this.setState({
 				action: 'login'
 			});
-		} else if (key === 2) {
+		} else if (key === '2') {
 			this.setState({
 				action: 'register'
 			});
@@ -62,14 +62,14 @@ class PCHeader extends Component {
 		};
 		let formData = this.props.form.getFieldsValue();
 		fetch('http://newsapi.gugujiankong.com/Handler.ashx?action=' + this.state.action
-		+ '&username=' + FormData.userName + '&password=' + FormData.password
-		+ '&r_userName=' + FormData.r_userName + '&r_password=' + formData.r_password
+		+ '&username=' + formData.userName + '&password=' + formData.password
+		+ '&r_userName=' + formData.r_userName + '&r_password=' + formData.r_password
 		+ '&r_confirmPassword=' + formData.r_confirmPassword, fetchOptions)
 		.then(res => res.json())
 		.then((res) => {
 			this.setState({
-				userName: res.userName,
-				userId: res.userId
+				userName: res.NickUserName,
+				userId: res.UserId
 			});
 			localStorage.userName = res.NickUserName;
 			localStorage.userId = res.UserId;
@@ -86,10 +86,6 @@ class PCHeader extends Component {
 		const userShow = this.state.hasLogined
 			? <Menu.Item key="logout" className="register">
 				 <Button type="primary" htmlType="button" size={this.state.buttonSize}>{this.state.userName}</Button>
-				 &nbsp;&nbsp;
-				 {/* <Link target="_blank"> */}
-				 	<Button type="dashed" htmlType="button" size={this.state.buttonSize}>个人中心</Button>
-				 {/* </Link> */}
 				 &nbsp;&nbsp;
 				 <Button type="ghost" htmlType="button" onClick={this.logout} size={this.state.buttonSize}>退出</Button>
 			 	</Menu.Item>
