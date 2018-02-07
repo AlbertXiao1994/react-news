@@ -60,7 +60,7 @@ class PCHeader extends Component {
 		const fetchOptions = {
 			method: 'GET'
 		};
-		let form = this.props.form.getFieldsValue();
+		let formData = this.props.form.getFieldsValue();
 		fetch('http://newsapi.gugujiankong.com/Handler.ashx?action=' + this.state.action
 		+ '&username=' + FormData.userName + '&password=' + FormData.password
 		+ '&r_userName=' + FormData.r_userName + '&r_password=' + formData.r_password
@@ -71,8 +71,8 @@ class PCHeader extends Component {
 				userName: res.userName,
 				userId: res.userId
 			});
-			localStorage.userName = res.userName;
-			localStorage.userId = res.userId;
+			localStorage.userName = res.NickUserName;
+			localStorage.userId = res.UserId;
 		});
 		if (this.state.action === 'login') {
 			this.setState({
@@ -199,6 +199,5 @@ class PCHeader extends Component {
     );
   }
 }
-
 
 export default PCHeader = Form.create()(PCHeader);
