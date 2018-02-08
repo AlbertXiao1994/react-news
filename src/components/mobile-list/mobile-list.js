@@ -1,16 +1,20 @@
 import React, { Component } from 'react';
-import { Row, Col } from 'antd'
+import { Row, Col } from 'antd';
+import Tloader from 'react-touch-loader';
 
 export default class MobileList extends Component {
   state = {
-    news: ''
+    news: '',
+    count: 5,
+    initializing: 1,
+    hasMore: false
   };
   componentWillMount() {
     const fetchOptions = {
       methods: 'GET'
     };
     fetch("http://newsapi.gugujiankong.com/Handler.ashx?action=getnews&type="
-    + this.props.type + '&count=' + this.props.count, fetchOptions)
+    + this.props.type + '&count=' + this.state.count, fetchOptions)
     .then(res => res.json())
     .then((res) => {
       this.setState({
@@ -18,7 +22,42 @@ export default class MobileList extends Component {
       });
     });
   };
+  handleLoadMore(resolve) {
+    setTimeout(() => {
+      let count = this.state.count;
+      this.setState({
+        count: count + 5
+      });
+      const fetchOptions = {
+        methods: 'GET'
+      };
+      fetch("http://newsapi.gugujiankong.com/Handler.ashx?action=getnews&type="
+      + this.props.type + '&count=' + this.state.count, fetchOptions)
+      .then(res => res.json())
+      .then((res) => {
+        this.setState({
+          news: res
+        });
+      });
+
+      this.setState({
+        hasMore: count > 0 && count <= 50
+      });
+
+      resolve();
+    }, 2000);
+  };
+  componentDidMount() {
+    setTimeout(() => {
+      this.setState({
+        hasMore: true,
+        initializing: 1
+      })
+    }, 2000)
+    
+  };
   render() {
+    const { initializing, hasMore} = this.state;
     const news = this.state.news;
     const newsList = news.length 
     ? news.map((item, index) => (
@@ -45,7 +84,15 @@ export default class MobileList extends Component {
     return (
       <div>
         <Row>
-          <Col span={24}>{ newsList }</Col>
+          <Col span={24}>
+            <Tloader
+              initializing={initializing}
+              hasMore={hasMore}
+              onLoadMore={() => this.handleLoadMore}
+              className="tloader">
+              { newsList }
+            </Tloader>
+          </Col>
         </Row>
       </div>
     );
